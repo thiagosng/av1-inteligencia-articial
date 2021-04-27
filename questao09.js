@@ -1,25 +1,37 @@
+/**
+ * 1º AVALIAÇÃO (AV1)
+ * 
+ * DISCIPLINA: Inteligencia Artificial
+ * Aluno: José Claudivan da Silva
+ * 
+ * Questão 09
+ */
+
+//Função para gerar numeros randomicos
 function random(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 
-	// The maximum is exclusive and the minimum is inclusive
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//Função para gerar a população aleatoriamente no intervalo de 0 a 800
 function generatePopulation() {
 	let population = [];
 
 	for (let index = 0; index < 8; index++) {
-		population.push(random(0, 300));
+		population.push(random(0, 800));
 	}
 
 	return population;
 }
 
+//Função para o calculo da formula
 function fitness(value, b, c) {
 	return Math.abs(Math.pow(value, 2) - b * value + c);
 }
 
+//Função para conversão do individuo de decimal para binario
 function getIndividualsAsBinary() {
 	const populationArray = generatePopulation();
 	const resultArray = [];
@@ -38,6 +50,7 @@ function getIndividualsAsBinary() {
 	return resultArray;
 }
 
+//Função para conversão do individuo de binario para decimal
 function convertFromBinaryToDecimal(array) {
 	const newArray = [];
 
@@ -48,6 +61,7 @@ function convertFromBinaryToDecimal(array) {
 	return newArray;
 }
 
+//Função para calcular cada individuo da população na formula do "fitness"
 function calculateEachMember() {
 	const binaries = getIndividualsAsBinary();
 	let newArray = [];
@@ -63,6 +77,7 @@ function calculateEachMember() {
 	return newArray;
 }
 
+//Função para selecionar os individuos desejados
 function filteredElements() {
 	const elements = calculateEachMember();
 	let newArray = [];
@@ -78,7 +93,7 @@ function filteredElements() {
 	return newArray;
 }
 
-// Sorts the population using the fitness as parameters to get the 4 best individuals
+// Função para ordenar a populacao
 function orderedPopulation() {
 	const elements = calculateEachMember();
 	let newArray = [];
@@ -100,6 +115,7 @@ function orderedPopulation() {
 	return newArray;
 }
 
+//Função da mutação dos individuos selecionados
 function mutate(mutationRate) {
 	for (let i = 0; i < this.keys.length; i += 1) {
 		// If below predefined mutation rate,
@@ -110,10 +126,7 @@ function mutate(mutationRate) {
 	}
 }
 
-// '000 | 1111 | 101'  '0000000111'
-
-// '00011' '11101' | '00000' '000111'
-
+//Função para cruzamento dos individuos
 function crossover(partner) {
 	const { length } = this.target;
 	const child = new Member(this.target);
