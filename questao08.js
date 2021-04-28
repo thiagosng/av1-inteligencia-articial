@@ -8,7 +8,7 @@
  */
 
 //Função para gerar numeros randomicos
-function random(min, max) {
+function geraNumeroRandomico(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 
@@ -16,14 +16,14 @@ function random(min, max) {
 }
 
 //Função para gerar a população aleatoriamente no intervalo de 0 a 600
-function generatePopulation() {
-	let population = [];
+function geraPopulacao() {
+	let populacao = [];
 
 	for (let index = 0; index < 8; index++) {
-		population.push(random(0, 600));
+		populacao.push(geraNumeroRandomico(0, 600));
 	}
 
-	return population;
+	return populacao;
 }
 
 //Função para o calculo da formula
@@ -32,11 +32,11 @@ function fitness(value, b, c) {
 }
 
 //Função para conversão do individuo de decimal para binario
-function getIndividualsAsBinary() {
-	const populationArray = generatePopulation();
+function converteDecimaParaBinario() {
+	const populacaoArray = geraPopulacao();
 	const resultArray = [];
 
-	populationArray.map((item) => {
+	populacaoArray.map((item) => {
 		let value = item.toString(2);
 
 		if (value.length < 12) {
@@ -51,7 +51,7 @@ function getIndividualsAsBinary() {
 }
 
 //Função para conversão do individuo de binario para decimal
-function convertFromBinaryToDecimal(array) {
+function converteBinarioParaDecimal(array) {
 	const newArray = [];
 
 	newArray = array.map((item) => {
@@ -62,8 +62,8 @@ function convertFromBinaryToDecimal(array) {
 }
 
 //Função para calcular cada individuo da população na formula do "fitness"
-function calculateEachMember() {
-	const binaries = getIndividualsAsBinary();
+function calcularIndividuos() {
+	const binaries = converteDecimaParaBinario();
 	let newArray = [];
 
 	newArray = binaries.map((item) => {
@@ -78,8 +78,8 @@ function calculateEachMember() {
 }
 
 //Função para selecionar os individuos desejados
-function filteredElements() {
-	const elements = calculateEachMember();
+function filtrarElementos() {
+	const elements = calcularIndividuos();
 	let newArray = [];
 
 	newArray = elements.filter(function (item) {
@@ -87,15 +87,17 @@ function filteredElements() {
 	});
 
 	if (newArray.length === 0) {
-		return "There is no fit member";
+		return "Nenhum individuo atende ao criterio(fit < 600)";
 	}
+
+	console.log(`Individuos encontrados com fit < 600:`);
 
 	return newArray;
 }
 
 // Função para ordenar a populacao
-function orderedPopulation() {
-	const elements = calculateEachMember();
+function OrdenarPopulacao() {
+	const elements = calcularIndividuos();
 	let newArray = [];
 
 	console.log(elements)
@@ -115,32 +117,13 @@ function orderedPopulation() {
 	return newArray;
 }
 
-//Função da mutação dos individuos selecionados
-function mutate(mutationRate) {
-	for (let i = 0; i < this.keys.length; i += 1) {
-		// If below predefined mutation rate,
-		// generate a new random letter on this position.
-		if (Math.random() < mutationRate) {
-			this.keys[i] = generateLetter();
-		}
-	}
-}
-
 //Função para cruzamento dos individuos
-function crossover(partner) {
-	const { length } = this.target;
-	const child = new Member(this.target);
-	const midpoint = random(0, length);
-
-	for (let i = 0; i < length; i += 1) {
-		if (i > midpoint) {
-			child.keys[i] = this.keys[i];
-		} else {
-			child.keys[i] = partner.keys[i];
-		}
-	}
-
-	return child;
+function cruzamento() {
+	const selectedElements = filtrarElementos()
+	const firstBits = []
+	const middleBits = []
+	const lastBits = []
 }
 
-console.log(orderedPopulation());
+console.log('POPULACAO INICIAL:\n',calcularIndividuos());
+console.log(filtrarElementos());
