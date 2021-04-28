@@ -83,7 +83,7 @@ function filteredElements() {
 	let newArray = [];
 
 	newArray = elements.filter(function (item) {
-		return item.fit < 300;
+		return item.fit < 600;
 	});
 
 	if (newArray.length === 0) {

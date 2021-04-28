@@ -143,4 +143,5 @@ function crossover(partner) {
 	return child;
 }
 
-console.log(orderedPopulation());
+//console.log(orderedPopulation());
+console.log(filteredElements());
